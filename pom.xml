@@ -9,7 +9,7 @@
         <version>0.101-SNAPSHOT</version>
     </parent>
 
-    <artifactId>model-objects</artifactId>
+    <artifactId>model-orm</artifactId>
 
     <version>0.101-SNAPSHOT</version>
 
