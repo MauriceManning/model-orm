@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:tx="http://www.springframework.org/schema/tx"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <import resource="classpath:datasource.xml"/>
+    <import resource="classpath:aop-config.xml"/>
+
+    <context:component-scan base-package="edu.berkeley.path.scenario" />
+    <context:annotation-config />
+
+    <bean id="logger" class="org.apache.log4j.Logger" factory-method="getLogger">
+        <constructor-arg type="java.lang.String" value="FundamentalDiagramController.class.getName()" />
+    </bean>
+
+
+
+
+    <bean id="fundamentalDiagramDao" class="edu.berkeley.path.scenario.dao.impl.FundamentalDiagramDao">
+    </bean>
+    <bean id="fundamentalDiagramSetDao" class="edu.berkeley.path.scenario.dao.impl.FundamentalDiagramSetDao">
+    </bean>
+    <bean id="fundamentalDiagramProfileDao" class="edu.berkeley.path.scenario.dao.impl.FundamentalDiagramProfileDao">
+    </bean>
+    <bean id="calibrationAlgorithmTypeDao" class="edu.berkeley.path.scenario.dao.impl.CalibrationAlgorithmTypeDao">
+    </bean>
+    <bean id="fundamentalDiagramTypeDao" class="edu.berkeley.path.scenario.dao.impl.FundamentalDiagramTypeDao">
+    </bean>
+
+    <bean id="fundamentalDiagram" class="edu.berkeley.path.scenario.model.impl.FundamentalDiagram">
+    </bean>
+    <bean id="fundamentalDiagramSet" class="edu.berkeley.path.scenario.model.impl.FundamentalDiagramSet">
+    </bean>
+    <bean id="fundamentalDiagramProfile" class="edu.berkeley.path.scenario.model.impl.FundamentalDiagramProfile">
+    </bean>
+    <bean id="calibrationAlgorithmType" class="edu.berkeley.path.scenario.model.impl.CalibrationAlgorithmType">
+    </bean>
+    <bean id="fundamentalDiagramType" class="edu.berkeley.path.scenario.model.impl.FundamentalDiagramType">
+    </bean>
+
+    <bean id="fundamentalDiagramManager" class="edu.berkeley.path.scenario.service.impl.FundamentalDiagramManager">
+        <property name="fundamentalDiagramDao" ref="fundamentalDiagramDao" />
+        <property name="fundamentalDiagramSetDao" ref="fundamentalDiagramSetDao" />
+        <property name="fundamentalDiagramProfileDao" ref="fundamentalDiagramProfileDao" />
+        <property name="fundamentalDiagramTypeDao" ref="fundamentalDiagramTypeDao" />
+        <property name="calibrationAlgorithmTypeDao" ref="calibrationAlgorithmTypeDao" />
+
+    </bean>
+
+</beans>
