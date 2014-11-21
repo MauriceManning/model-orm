@@ -1,13 +1,7 @@
 package edu.berkeley.path.scenario;
 
-import edu.berkeley.path.model_objects.scenario.*;
 import edu.berkeley.path.scenario.model.*;
 import edu.berkeley.path.scenario.model.impl.*;
-import edu.berkeley.path.scenario.model.impl.CalibrationAlgorithmType;
-import edu.berkeley.path.scenario.model.impl.FundamentalDiagram;
-import edu.berkeley.path.scenario.model.impl.FundamentalDiagramProfile;
-import edu.berkeley.path.scenario.model.impl.FundamentalDiagramSet;
-import edu.berkeley.path.scenario.model.impl.FundamentalDiagramType;
 import edu.berkeley.path.scenario.service.IFundamentalDiagramManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +9,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
+
+import org.dom4j.io.DocumentSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +19,6 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import org.junit.Ignore;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -33,7 +29,11 @@ import edu.berkeley.path.scenario.dao.IFundamentalDiagramProfileDao;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
-import org.dom4j.Document;
+import javax.xml.XMLConstants;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.dom4j.io.DocumentResult;
 
 /**
@@ -84,6 +84,7 @@ public class FundamentalDiagramTest {
     private static IFundamentalDiagramProfile fundamentalDiagramProfile, fundamentalDiagramProfile2;
     private static ICalibrationAlgorithmType calibrationAlgorithmType;
     private static IFundamentalDiagramType fundamentalDiagramType;
+    private static ILinkType linkType;
 
     private ClassPathXmlApplicationContext context = null;
 
@@ -95,7 +96,7 @@ public class FundamentalDiagramTest {
     @Before
     public void setUp() throws Exception {
 
-        this.context = new ClassPathXmlApplicationContext( "springContextMain.xml");
+        this.context = new ClassPathXmlApplicationContext("springContextModelORM.xml");
 
         logtimestamp = new java.sql.Timestamp( System.currentTimeMillis() );
 
@@ -138,6 +139,9 @@ public class FundamentalDiagramTest {
         fundamentalDiagramProfile.setLinkId(LINK_ID);
         fundamentalDiagramProfile.setStartTime(START_TIME);
         fundamentalDiagramProfile.setModStamp(logtimestamp);
+
+        linkType = new LinkType();
+
 
 
         fundamentalDiagramProfile2 = new FundamentalDiagramProfile();
@@ -290,7 +294,6 @@ public class FundamentalDiagramTest {
 
 
 
-
         final Logger logger = LogManager.getLogger(IFundamentalDiagramSetDao.class.getName());
         fundamentalDiagramManager = this.context.getBean(IFundamentalDiagramManager.class);
 
@@ -303,6 +306,7 @@ public class FundamentalDiagramTest {
 
         // Create the JAXBContext
         DocumentResult dr = new DocumentResult();
+
         try {
             JAXBContext jc = JAXBContext.newInstance(FundamentalDiagramSet.class);
             // Marshal the POJO to a DOM4J DocumentResult
@@ -310,10 +314,31 @@ public class FundamentalDiagramTest {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             FundamentalDiagramSet fds = (FundamentalDiagramSet) ifds;
             marshaller.marshal(fds, dr);
+
             marshaller.marshal(fds, System.out );
         } catch (Exception ex) {
             logger.info("Exception creating xml ex: ", ex.getMessage());
         }
+
+
+
+        // Validate the xml against the scenario.xsd
+        try {
+            SchemaFactory factory =
+                    SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = factory.newSchema(new File("src/main/resources/scenario.xsd"));
+            Validator validator = schema.newValidator();
+            DocumentSource ds = new DocumentSource(dr.getDocument());
+
+            validator.validate(ds);
+        } catch (Exception e) {
+            System.out.println("Exception: "+e.getMessage());
+            return ;
+        }
+        return;
+
+
+
     }
 
 

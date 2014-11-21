@@ -51,7 +51,10 @@
         <property name="fundamentalDiagramProfileDao" ref="fundamentalDiagramProfileDao" />
         <property name="fundamentalDiagramTypeDao" ref="fundamentalDiagramTypeDao" />
         <property name="calibrationAlgorithmTypeDao" ref="calibrationAlgorithmTypeDao" />
+    </bean>
 
+    <bean id="fundamentalDiagramController" class="edu.berkeley.path.scenario.controller.FundamentalDiagramController">
+        <property name="fundamentalDiagramManager" ref="fundamentalDiagramManager" />
     </bean>
 
 </beans>

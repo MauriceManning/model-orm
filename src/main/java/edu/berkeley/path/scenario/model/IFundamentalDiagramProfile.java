@@ -95,13 +95,29 @@ public interface IFundamentalDiagramProfile {
      * Get the number of lanes on this link.
      *
      */
-    public Long getNumLanes();
+    public Double getNumLanes();
 
     /**
      *  Set the number of lanes on this link.
      *
      */
-    public void setNumLanes(Long value);
+    public void setNumLanes(Double value);
+
+
+    /**
+     * Get the number of lanes on this link.
+     *
+     */
+    public Double getSpeedLimit();
+
+    /**
+     *  Set the number of lanes on this link.
+     *
+     */
+    public void setSpeedLimit(Double value);
+
+
+
 
     /**
      * Gets the value of the sensorId property.

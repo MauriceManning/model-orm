@@ -14,7 +14,6 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAttribute;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,37 +32,32 @@ public class FundamentalDiagramProfile implements IFundamentalDiagramProfile {
     @Id
     @GeneratedValue(generator="FDP_ID_SEQ", strategy = GenerationType.SEQUENCE)
     @Column(name = "ID", nullable = false)
-    @XmlAttribute(name = "id", required = true)
     protected long id;
 
     @Column(name = "LINK_ID", nullable = false)
-    @XmlAttribute(name = "link_id")
     protected Long linkId;
 
     @Column(name = "NUM_LANES", nullable = true)
-    @XmlAttribute(name = "num_lanes")
-    protected Long numLanes;
+    protected Double numLanes;
 
     @Column(name = "SENSOR_ID", nullable = true)
-    @XmlAttribute(name = "sensor_id")
     protected Long sensorId;
 
     @Column(name = "START_TIME", nullable = false)
-    @XmlAttribute(name = "start_time")
     protected Double startTime;
 
     @Column(name = "SAMPLE_RATE", nullable = false)
-    @XmlAttribute(name = "dt")
     protected Double dt;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MODSTAMP", nullable = false)
-    @XmlAttribute(name = "mod_stamp")
     protected Date modStamp;
 
     @Column(name = "AGG_RUN_ID", nullable = true)
-    @XmlAttribute(name = "agg_run_id")
     protected Long aggRunId;
+
+    @Column(name = "SPEED_LIMIT", nullable = true)
+    protected Double speedLimit;
 
     @OneToOne(targetEntity=CalibrationAlgorithmType.class, cascade=CascadeType.ALL)
     @JoinColumn(name = "CAL_ALG_TYPE",  nullable=true)
@@ -186,11 +180,15 @@ public class FundamentalDiagramProfile implements IFundamentalDiagramProfile {
 
 
     @Override
-    public Long getNumLanes() { return numLanes; }
+    public Double getNumLanes() { return numLanes; }
 
     @Override
-    public void setNumLanes(Long value) { this.numLanes = value; }
+    public void setNumLanes(Double value) { this.numLanes = value; }
 
+    @Override
+    public Double getSpeedLimit() { return speedLimit; }
 
+    @Override
+    public void setSpeedLimit(Double value) { this.speedLimit = value; }
 
 }

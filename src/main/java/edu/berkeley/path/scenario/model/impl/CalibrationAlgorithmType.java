@@ -7,7 +7,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAttribute;
 
 
 import java.util.Date;
@@ -26,25 +25,20 @@ public class CalibrationAlgorithmType implements ICalibrationAlgorithmType {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator="fd_id_seq")
 //    @SequenceGenerator(name="fd_id_seq", sequenceName="fd_id_seq", allocationSize=1)@SequenceGenerator(name="seq", initialValue=1
     @Column(name = "ID", nullable = false)
-    @XmlAttribute(name = "id", required = true)
     private int id;
 
     @Column(name = "NAME", nullable = false)
-    @XmlAttribute(name = "name", required = true)
     private String name;
 
 
     @Column(name = "DESCRIPTION", nullable = true)
-    @XmlAttribute(name = "description", required = true)
     private String description;
 
     @Column(name = "IN_USE", nullable = false)
-    @XmlAttribute(name = "in_use", required = true)
     private int inUse;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "MODSTAMP", nullable = true)
-    @XmlAttribute(name = "mod_stamp")
     private Date modStamp;
 
     @OneToOne(mappedBy = "calibrationAlgorithmType", cascade = CascadeType.ALL,  targetEntity=FundamentalDiagramProfile.class)

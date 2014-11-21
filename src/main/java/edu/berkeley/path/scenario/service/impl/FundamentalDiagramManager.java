@@ -17,7 +17,6 @@ import java.util.List;
  *
  */
 @Service
-//@Transactional
 public class FundamentalDiagramManager implements IFundamentalDiagramManager {
 
     private SessionFactory sessionFactory;
@@ -44,50 +43,6 @@ public class FundamentalDiagramManager implements IFundamentalDiagramManager {
     private ICalibrationAlgorithmTypeDao   calibrationAlgorithmTypeDao;
     public void setCalibrationAlgorithmTypeDao(ICalibrationAlgorithmTypeDao catDao) { this.calibrationAlgorithmTypeDao = catDao; }
 
-//    @Override
-//    @Transactional
-//    public IFundamentalDiagram getFundamentalDiagram(long fundamentalDiagramId) {
-//
-//        return fundamentalDiagramDao.getFundamentalDiagram(fundamentalDiagramId);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public List<IFundamentalDiagram> getFundamentalDiagramList(long profileId ) {
-//        List<IFundamentalDiagram> retval = new ArrayList<IFundamentalDiagram>();
-//        IFundamentalDiagramProfile profile = fundamentalDiagramProfileDao.getFundamentalDiagramProfile(profileId);
-//        retval =  profile.getFundamentalDiagrams();
-//        return retval;
-//
-//    }
-//
-//    @Override
-//    @Transactional
-//    public IFundamentalDiagramProfile getFundamentalDiagramProfile(long id ) {
-//        return fundamentalDiagramProfileDao.getFundamentalDiagramProfile( id );
-//    }
-//
-//    @Override
-//    @Transactional
-//    public List<IFundamentalDiagramProfile> getFundamentalDiagramProfileList(long setId ) {
-//        List<IFundamentalDiagramProfile> retval = new ArrayList<IFundamentalDiagramProfile>();
-//        IFundamentalDiagramSet set =  fundamentalDiagramSetDao.getFundamentalDiagramSet(setId);
-//        retval = set.getFundamentalDiagramProfiles();
-//        return retval;
-//
-//    }
-
-    @Override
-    @Transactional
-    public ICalibrationAlgorithmType getCalibrationAlgorithmType(long id ) {
-        return calibrationAlgorithmTypeDao.getCalibrationAlgorithmType( id );
-    }
-
-    @Override
-    @Transactional
-    public IFundamentalDiagramType getFundamentalDiagramType(long id ) {
-        return fundamentalDiagramTypeDao.getFundamentalDiagramType( id );
-    }
 
 
     @Override

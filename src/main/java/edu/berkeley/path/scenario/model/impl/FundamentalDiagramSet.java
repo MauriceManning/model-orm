@@ -10,7 +10,6 @@ import javax.persistence.CascadeType;
 //import org.hibernate.annotations.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Date;
